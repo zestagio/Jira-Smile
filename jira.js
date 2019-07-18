@@ -31,8 +31,8 @@
       if (!$el.closest("div[class^='GridColumnElement__GridColumn']").find('#jira-issue-branch-and-commit').length) {
         var issueKey = window.location.pathname.startsWith('/browse/') ? window.location.pathname.split('/').pop() : JIRA.Issue.getIssueKey();
         var issueTitle = $el.text().trim()
-          .replace(/\[.*?\][\s\"\']*/g,'')
-          .replace(/\W/g,"-")
+          .replace(/\[.*?\][\s\"\']*/g, '')
+          .replace(/\W/g, '-')
           .replace(/_{2,10}/, '-')
           .toLowerCase();
 
