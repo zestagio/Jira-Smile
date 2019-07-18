@@ -48,7 +48,7 @@
               $this.fadeIn('slow');
             });
 
-            AJS.$.notify($this.text() + " copied to clipboard", "success");
+            AJS.$.notify($this.text() + ' copied to clipboard', 'success');
           });
         });
       }
