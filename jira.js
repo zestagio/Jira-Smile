@@ -1,13 +1,3 @@
-// ==UserScript==
-// @name         Jira Helper
-// @namespace    http://tampermonkey.net/
-// @version      0.1
-// @author       Yauheni Harbuzau
-// @match        https://*.atlassian.net/browse/*
-// @match        https://*.atlassian.net/secure/RapidBoard.jspa*
-// @grant        none
-// @require      https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js
-// ==/UserScript==
 (function (AJS, JIRA) {
   'use strict';
 
@@ -30,14 +20,19 @@
     function gitBranchAndCommit($el) {
       if (!$el.closest("div[class^='GridColumnElement__GridColumn']").find('#jira-issue-branch-and-commit').length) {
         var issueKey = window.location.pathname.startsWith('/browse/') ? window.location.pathname.split('/').pop() : JIRA.Issue.getIssueKey();
-        var issueTitle = $el.text().trim()
+        var issueTitle = $el.text();
+        var issueBranch = issueKey + '-' + issueTitle.trim()
           .replace(/\[.*?\][\s\"\']*/g, '')
           .replace(/\W/g, '-')
-          .replace(/_{2,10}/, '-')
+          .replace(/-{2,10}/, '-')
+          .replace(/[-]+$/, '')
           .toLowerCase();
+        var issueCommit = issueKey + ': ' + issueTitle;
 
-        var content = '<strong>Branch: <span class="copy-me" style="color:#d22;cursor:pointer;">' + issueKey + '-' + issueTitle + '</span></strong><br />';
-        content += '<strong>Commit: <span class="copy-me" style="color:#d22;cursor:pointer;">' + issueKey + ': </span></strong>';
+        var content = '';
+        content += '<strong>Branch: <span class="copy-me" style="color:#d22;cursor:pointer;">' + issueBranch + '</span></strong><br />';
+        content += '<strong>Commit: <span class="copy-me" style="color:#d22;cursor:pointer;">' + issueCommit + '</span></strong><br />';
+        content += '<strong>Short commit: <span class="copy-me" style="color:#d22;cursor:pointer;">' + issueKey + ': </span></strong>';
 
         $el.closest("div[class^='GridColumnElement__GridColumn']").prepend('<div id="jira-issue-branch-and-commit">' + content + '</div>');
 
