@@ -2,18 +2,16 @@
   'use strict';
 
   AJS.$(function () {
-    var $title = AJS.$('#jira-issue-container').find('h1');
-    if (!$title.length) {
-      $title = AJS.$('#jira-issue-changeboarding-banner').next('div').find('h1');
-    }
+    var $title = AJS.$('h1[data-test-id="issue.views.issue-base.foundation.summary.heading"]');
 
     if ($title.length) {
       gitBranchAndCommit($title);
     }
 
     AJS.$(document).bind('DOMNodeInserted', function (e) {
-      if (AJS.$(e.target).parents('#jira-issue-container').length || AJS.$(e.target).find('#jira-issue-container').length) {
-        gitBranchAndCommit(AJS.$(e.target).find('h1'));
+      var $title = AJS.$(e.target).find('h1[data-test-id="issue.views.issue-base.foundation.summary.heading"]');
+      if ($title.length) {
+        gitBranchAndCommit($title);
       }
     });
 
