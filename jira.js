@@ -22,7 +22,7 @@
         var issueBranch = issueKey + '-' + issueTitle.trim()
           .replace(/\[.*?\][\s\"\']*/g, '')
           .replace(/\W/g, '-')
-          .replace(/-{2,10}/, '-')
+          .replace(/-{2,}/g, '-')
           .replace(/[-]+$/, '')
           .toLowerCase();
         var issueCommit = issueKey + ': ' + issueTitle;
